@@ -625,7 +625,7 @@ namespace :py do
     old_version = python_version
     new_version = nil
     if bump_nightly && old_version.include?('nightly')
-      new_version = old_version.gsub('nightly', "#{Time.now.strftime("%Y%m%d")}")
+      new_version = old_version.gsub('nightly', "#{Time.now.strftime("%Y%m%d%H%M")}")
     else
       new_version = updated_version(old_version, arguments[:version])
       new_version += '.nightly' unless old_version.include?('nightly')
@@ -1042,7 +1042,12 @@ namespace :all do
 
   desc 'Update everything in preparation for a release'
   task :prepare, [:channel] do |_task, arguments|
-    args = Array(arguments[:channel]) ? ['--', "--chrome_channel=#{arguments[:channel].capitalize}"] : []
+    chrome_channel = if arguments[:channel].nil?
+                        'Stable'
+                     else
+                        arguments[:channel]
+                     end
+    args = Array(chrome_channel) ? ['--', "--chrome_channel=#{chrome_channel.capitalize}"] : []
     Bazel.execute('run', args, '//scripts:pinned_browsers')
     commit!('Update pinned browser versions', ['common/repositories.bzl'])
 
