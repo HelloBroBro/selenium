@@ -99,7 +99,7 @@ task '//java/test/org/openqa/selenium/environment/webserver:webserver:uber' => [
 JAVA_RELEASE_TARGETS = %w[
   //java/src/org/openqa/selenium/chrome:chrome.publish
   //java/src/org/openqa/selenium/chromium:chromium.publish
-  //java/src/org/openqa/selenium/devtools/v119:v119.publish
+  //java/src/org/openqa/selenium/devtools/v122:v122.publish
   //java/src/org/openqa/selenium/devtools/v120:v120.publish
   //java/src/org/openqa/selenium/devtools/v121:v121.publish
   //java/src/org/openqa/selenium/devtools/v85:v85.publish
@@ -549,7 +549,7 @@ namespace :py do
   desc 'Release Python wheel and sdist to pypi'
   task :release, [:args] do |_task, arguments|
     args = Array(arguments[:args]) || ['--stamp']
-    Bazel.execute('run', args, '//py:selenium-release')
+    Bazel.execute('build', args, '//py:selenium-release')
   end
 
   desc 'generate and copy files required for local development'
@@ -1219,7 +1219,7 @@ def update_gh_pages
   return restore_git(origin_reference) unless response == 'y' || response == 'yes'
 
   puts "Committing changes"
-  commit!('updating all API docs', 'docs/api/')
+  commit!('updating all API docs', ['docs/api/'])
 
   puts "Pushing changes to upstream repository"
   @git.push
