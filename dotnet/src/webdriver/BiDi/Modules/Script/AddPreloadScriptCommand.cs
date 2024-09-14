@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium.BiDi.Communication;
+using OpenQA.Selenium.BiDi.Communication;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.BiDi.Modules.Script;
@@ -21,6 +21,15 @@ public record AddPreloadScriptOptions : CommandOptions
     public IEnumerable<BrowsingContext.BrowsingContext>? Contexts { get; set; }
 
     public string? Sandbox { get; set; }
+}
+
+public record BrowsingContextAddPreloadScriptOptions : AddPreloadScriptOptions
+{
+    internal new IEnumerable<BrowsingContext.BrowsingContext>? Contexts
+    {
+        get => base.Contexts;
+        set => base.Contexts = value;
+    }
 }
 
 internal record AddPreloadScriptResult(PreloadScript Script);

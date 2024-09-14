@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using OpenQA.Selenium.BiDi.Communication;
 
 namespace OpenQA.Selenium.BiDi.Modules.Network;
@@ -17,6 +17,15 @@ public record AddInterceptOptions : CommandOptions
     public IEnumerable<BrowsingContext.BrowsingContext>? Contexts { get; set; }
 
     public IEnumerable<UrlPattern>? UrlPatterns { get; set; }
+}
+
+public record BrowsingContextAddInterceptOptions : AddInterceptOptions
+{
+    internal new IEnumerable<BrowsingContext.BrowsingContext>? Contexts
+    {
+        get => base.Contexts;
+        set => base.Contexts = value;
+    }
 }
 
 public record AddInterceptResult(Intercept Intercept);
